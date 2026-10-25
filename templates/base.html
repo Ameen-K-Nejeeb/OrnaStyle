@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Lumière | Haute Joaillerie</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            50: '#FAF8F0',
+                            100: '#F5EED8',
+                            300: '#E5C97A',
+                            500: '#D4AF37',
+                            600: '#C29B27',
+                            700: '#9E7C1B',
+                        },
+                        blush: {
+                            50: '#FFF5F6',
+                            100: '#FEE8EB',
+                            200: '#FCD1D7',
+                            300: '#F7A8B5',
+                            500: '#E06D82',
+                        },
+                        rosegold: '#B76E79',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#FCF9F7] text-stone-800 font-sans min-h-screen flex flex-col selection:bg-rose-100 selection:text-gold-700">
+
+    <!-- Top Champagne Banner -->
+    <div class="bg-gradient-to-r from-[#FCEEEA] via-[#FDF8F0] to-[#FCEEEA] py-1.5 text-center text-[11px] font-medium tracking-widest text-gold-700 border-b border-rose-100/60 uppercase">
+        Complimentary Silk Gift Wrapping & Insured Express Delivery
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100/80 shadow-[0_2px_15px_-3px_rgba(224,109,130,0.05)]">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="{% url 'home' %}" class="flex flex-col items-center">
+                <span class="font-serif text-2xl md:text-3xl tracking-[0.2em] font-semibold text-stone-900">MAISON LUMIÈRE</span>
+                <span class="text-[9px] tracking-[0.35em] text-gold-600 font-medium -mt-1 uppercase">Atelier de Joaillerie</span>
+            </a>
+
+            <div class="flex items-center space-x-6 text-sm">
+                <a href="{% url 'home' %}" class="text-stone-600 hover:text-gold-600 transition">Collection</a>
+                {% if user.is_authenticated %}
+                    {% if user.is_custom_admin or user.is_vendor %}
+                        <a href="{% url 'dashboard' %}" class="bg-gradient-to-r from-amber-400 via-gold-500 to-amber-500 text-white px-3.5 py-1.5 rounded-full text-xs font-medium shadow-sm hover:opacity-90 transition">
+                            Curator Portal
+                        </a>
+                    {% endif %}
+                    <span class="text-xs text-rose-900/60 font-serif italic">{{ user.username }} ({{ user.get_role_display }})</span>
+                    <form action="{% url 'logout' %}" method="post" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-stone-500 hover:text-rose-500 text-xs">Sign Out</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-stone-600 hover:text-gold-600 transition">Sign In</a>
+                    <a href="{% url 'register' %}" class="bg-gradient-to-r from-rose-400 to-rosegold text-white px-4 py-2 rounded-full text-xs font-semibold shadow-sm hover:opacity-90 transition">
+                        Join Maison
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Stage -->
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-10 w-full">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footnote -->
+    <footer class="bg-stone-900 text-stone-300 py-10 mt-16 border-t-2 border-gold-500/40">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h3 class="font-serif text-xl tracking-[0.25em] text-gold-300 uppercase">Maison Lumière</h3>
+            <p class="text-xs text-stone-400 mt-2 font-light">Crafted with certified conflict-free diamonds, fair-mined rose gold & ethical pearls.</p>
+            <div class="mt-6 text-[10px] text-stone-500 uppercase tracking-widest">
+                &copy; 2026 Maison Lumière Joaillerie. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

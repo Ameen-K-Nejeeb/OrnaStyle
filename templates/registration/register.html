@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 rounded-3xl border border-rose-100 shadow-[0_4px_25px_-5px_rgba(224,109,130,0.06)]">
+    <div class="text-center mb-6">
+        <h2 class="font-serif text-2xl font-normal text-stone-900">Become a Patron / Artisan</h2>
+        <p class="text-xs text-stone-400 mt-1">Select your access level and establish credentials</p>
+    </div>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-full mt-4 bg-gradient-to-r from-gold-500 to-amber-600 text-white py-3 rounded-full text-xs font-semibold tracking-widest uppercase shadow-sm hover:brightness-105 transition">
+            Establish Membership
+        </button>
+    </form>
+</div>
+{% endblock %}

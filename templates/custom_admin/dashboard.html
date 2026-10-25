@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-8 border-b border-rose-200">
+    <div>
+        <h1 class="font-serif text-3xl text-stone-900">Maison Curator Dashboard</h1>
+        <p class="text-xs text-stone-500 mt-1 font-light">Inventory CRUD and asset management for role: <strong class="text-gold-700 uppercase">{{ user.get_role_display }}</strong></p>
+    </div>
+    <a href="{% url 'item_create' %}" class="mt-4 md:mt-0 inline-flex items-center bg-gradient-to-r from-gold-500 to-amber-600 text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase shadow-sm hover:brightness-105 transition">
+        + Enlist Piece
+    </a>
+</div>
+
+<div class="bg-white rounded-2xl border border-rose-100 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-rose-50/40 text-stone-600 uppercase tracking-widest border-b border-rose-100">
+                <tr>
+                    <th class="py-3.5 px-4 font-semibold">Title</th>
+                    <th class="py-3.5 px-4 font-semibold">Material</th>
+                    <th class="py-3.5 px-4 font-semibold">Valuation</th>
+                    <th class="py-3.5 px-4 font-semibold">Stock</th>
+                    {% if user.is_custom_admin %}<th class="py-3.5 px-4 font-semibold">Vendor</th>{% endif %}
+                    <th class="py-3.5 px-4 font-semibold text-right">Operations</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-rose-50">
+                {% for item in items %}
+                <tr class="hover:bg-rose-50/30 transition">
+                    <td class="py-3.5 px-4 font-medium text-stone-800 font-serif text-sm">{{ item.title }}</td>
+                    <td class="py-3.5 px-4 text-stone-500">{{ item.get_material_display }}</td>
+                    <td class="py-3.5 px-4 font-semibold text-gold-700 font-serif">${{ item.price }}</td>
+                    <td class="py-3.5 px-4 text-stone-600">{{ item.stock }} units</td>
+                    {% if user.is_custom_admin %}
+                    <td class="py-3.5 px-4 text-stone-400 italic">{{ item.vendor.username }}</td>
+                    {% endif %}
+                    <td class="py-3.5 px-4 text-right space-x-3">
+                        <a href="{% url 'item_update' item.pk %}" class="text-amber-600 hover:text-amber-700 font-medium">Edit</a>
+                        <a href="{% url 'item_delete' item.pk %}" class="text-rose-500 hover:text-rose-700 font-medium">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-8 text-stone-400 italic">No artifacts found in this portal.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

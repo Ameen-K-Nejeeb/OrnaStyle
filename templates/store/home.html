@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Hero Banner -->
+<div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#FCECEE] via-[#FBF5F2] to-[#FCEEE8] border border-rose-100 p-8 md:p-14 mb-12 shadow-sm text-center">
+    <span class="text-xs uppercase tracking-[0.3em] text-rosegold font-semibold">Haute Bijoux Collection</span>
+    <h1 class="font-serif text-4xl md:text-5xl font-normal text-stone-900 mt-3 mb-4 leading-tight">
+        Radiate Elegance in Every Facet
+    </h1>
+    <p class="text-stone-600 text-sm max-w-xl mx-auto font-light leading-relaxed">
+        Adorn yourself with timeless craftsmanship. Hand-poured gold, rare pink sapphires, and ethically sourced gemstones tailored for modern grace.
+    </p>
+    <div class="mt-6 flex justify-center space-x-3">
+        <a href="#collection" class="bg-gradient-to-r from-amber-500 to-gold-600 text-white text-xs font-semibold tracking-wider uppercase px-6 py-3 rounded-full shadow hover:brightness-105 transition">Explore Gallery</a>
+    </div>
+</div>
+
+<!-- Category Ribbon -->
+<div id="collection" class="flex items-center justify-between border-b border-rose-200/50 pb-4 mb-8">
+    <h2 class="font-serif text-2xl text-stone-800 italic">Curated Creations</h2>
+    <span class="text-xs text-rosegold uppercase tracking-widest font-medium">{{ items|length }} exclusive artifacts</span>
+</div>
+
+<!-- Product Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {% for item in items %}
+    <div class="group bg-white rounded-2xl border border-rose-100 shadow-[0_4px_20px_-4px_rgba(224,109,130,0.06)] hover:shadow-[0_10px_25px_-5px_rgba(212,175,55,0.18)] transition duration-300 flex flex-col overflow-hidden">
+        
+        <!-- Image Area -->
+        <div class="relative bg-rose-50/20 aspect-square overflow-hidden flex items-center justify-center">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="object-cover w-full h-full group-hover:scale-105 transition duration-500">
+            {% else %}
+                <div class="text-rosegold/50 font-serif italic text-sm">No Preview Attached</div>
+            {% endif %}
+            <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-[10px] font-semibold text-gold-700 border border-gold-100 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                {{ item.get_material_display }}
+            </span>
+        </div>
+
+        <!-- Meta Details -->
+        <div class="p-5 flex flex-col flex-grow justify-between bg-white">
+            <div>
+                <span class="text-[10px] font-semibold tracking-widest text-rosegold uppercase">{{ item.category.name|default:"High Jewelry" }}</span>
+                <h3 class="font-serif text-lg text-stone-800 font-medium group-hover:text-gold-700 transition line-clamp-1 mt-0.5">{{ item.title }}</h3>
+                <p class="text-xs text-stone-400 mt-1">{{ item.weight_in_grams }}g pure metal &bull; By {{ item.vendor.username }}</p>
+            </div>
+            
+            <div class="mt-4 pt-3 border-t border-rose-50 flex items-center justify-between">
+                <div>
+                    <span class="text-[10px] uppercase text-stone-400 block font-light">Price</span>
+                    <span class="font-serif text-xl font-semibold text-stone-900">${{ item.price }}</span>
+                </div>
+                <a href="{% url 'product_detail' item.pk %}" class="bg-rose-50 hover:bg-gold-50 text-gold-700 border border-rose-200/70 hover:border-gold-300 px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition">
+                    Inspect
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full text-center py-16 bg-white border border-rose-100 rounded-2xl">
+        <p class="font-serif text-stone-400 text-lg italic">The boutique showcases are presently awaiting the next release.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
