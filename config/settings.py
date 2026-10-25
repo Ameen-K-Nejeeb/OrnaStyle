@@ -134,5 +134,5 @@ LOGOUT_REDIRECT_URL = 'home'
 
 
 # Razorpay Configuration (Test Keys)
-RAZORPAY_KEY_ID = 'rzp_test_YourTestKeyIdHere'
-RAZORPAY_KEY_SECRET = 'YourTestKeySecretHere'
+RAZORPAY_KEY_ID = 'rzp_test_TqAwib1UlduMhE'
+RAZORPAY_KEY_SECRET = '49KojfjdVO6kzDerTw5SUuqt'
