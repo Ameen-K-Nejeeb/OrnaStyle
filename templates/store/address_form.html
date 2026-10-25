@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} | OrnaStyle{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 sm:p-12 rounded-3xl border border-ornagold-200/80 shadow-[0_20px_50px_rgba(212,175,55,0.08)]">
+    <div class="text-center mb-6 pb-4 border-b border-rose-100">
+        <span class="text-xs uppercase tracking-widest text-rosegold font-bold">Shipping Destination</span>
+        <h1 class="font-serif text-3xl font-normal text-stone-900 mt-1">{{ title }}</h1>
+    </div>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="space-y-1.5">
+                {% if field.name == 'is_default' %}
+                    <label class="flex items-center space-x-2 text-xs font-semibold text-stone-700 cursor-pointer pt-2">
+                        {{ field }}
+                        <span>Set as Default Delivery Address</span>
+                    </label>
+                {% else %}
+                    <label class="block text-xs uppercase tracking-wider font-semibold text-stone-700">{{ field.label }}</label>
+                    {{ field }}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="flex items-center justify-end space-x-3 pt-6 border-t border-rose-100">
+            <a href="{% url 'account_profile' %}" class="px-5 py-2.5 rounded-full border border-stone-200 text-xs font-semibold text-stone-600 uppercase hover:bg-stone-50 transition">Cancel</a>
+            <button type="submit" class="px-7 py-2.5 rounded-full bg-gradient-to-r from-ornagold-500 to-amber-600 text-white text-xs uppercase tracking-widest font-semibold shadow hover:scale-105 transition">Save Address</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

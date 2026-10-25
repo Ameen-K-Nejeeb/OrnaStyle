@@ -3,13 +3,27 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
-    # Storefront
+    # Storefront & About
     path('', views.home_view, name='home'),
     path('about/', views.about_view, name='about'),
     path('jewelry/<int:pk>/', views.product_detail_view, name='product_detail'),
-    path('jewelry/<int:pk>/buy-now/', views.direct_buy_view, name='buy_now'),
 
-    # Authentication
+    # Vault Cart Operations
+    path('cart/', views.cart_detail_view, name='cart_detail'),
+    path('cart/add/<int:pk>/', views.add_to_cart_view, name='add_to_cart'),
+    path('cart/item/<int:pk>/update/', views.update_cart_item_view, name='update_cart_item'),
+
+    # Account Hub & Address Studio
+    path('account/', views.account_profile_view, name='account_profile'),
+    path('account/address/new/', views.address_create_view, name='address_create'),
+    path('account/address/<int:pk>/edit/', views.address_edit_view, name='address_edit'),
+    path('account/address/<int:pk>/delete/', views.address_delete_view, name='address_delete'),
+
+    # Razorpay Payment Gateway Endpoints
+    path('payment/razorpay/order/', views.razorpay_create_order_view, name='razorpay_create_order'),
+    path('payment/razorpay/callback/', views.razorpay_callback_view, name='razorpay_callback'),
+
+    # Auth
     path('register/', views.register_view, name='register'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),

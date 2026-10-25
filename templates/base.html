@@ -78,7 +78,7 @@
             100% { background-position: 0% 50%; }
         }
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
         }
@@ -86,11 +86,11 @@
 </head>
 <body class="bg-[#FAF7F5] text-stone-800 font-sans min-h-screen flex flex-col relative overflow-x-hidden selection:bg-rose-200 selection:text-ornagold-700">
 
-    <!-- Atmospheric Radiant Light Blooms -->
+    <!-- Radiant Ambient Light Blooms -->
     <div class="fixed top-[-100px] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-blushgem-200/40 to-ornagold-200/30 blur-[120px] pointer-events-none -z-10 animate-float-soft"></div>
     <div class="fixed bottom-[10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-bl from-ornagold-300/20 to-blushgem-300/30 blur-[140px] pointer-events-none -z-10 animate-pulse-glow"></div>
 
-    <!-- Top Champagne Announcement Bar -->
+    <!-- Champagne Announcement Banner -->
     <div class="bg-gradient-to-r from-[#201B18] via-[#352B24] to-[#201B18] text-ornagold-200 py-1.5 px-4 text-center text-[11px] tracking-[0.25em] uppercase border-b border-ornagold-500/30 flex items-center justify-center space-x-2">
         <span class="inline-block animate-spin" style="animation-duration: 9s;">✦</span>
         <span class="font-medium">OrnaStyle Signature &bull; Complimentary Insured Delivery & Heirloom Velvet Box</span>
@@ -122,47 +122,67 @@
                 </a>
             </nav>
 
-            <!-- User Auth & Dashboard CTA -->
-            <div class="flex items-center space-x-4">
+            <!-- Actions: Cart, Account, Portal, Auth -->
+            <div class="flex items-center space-x-5">
+                
+                <!-- 1. Cart Icon: Exclude for Admins -->
+                {% if not user.is_custom_admin %}
+                    <a href="{% url 'cart_detail' %}" class="relative p-2 text-stone-700 hover:text-ornagold-600 transition" title="Vault Case (Bag)">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 stroke-current fill-none stroke-[1.6]" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                        {% if global_cart_count > 0 %}
+                            <span class="absolute -top-1 -right-1 bg-gradient-to-r from-ornagold-500 to-rosegold text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md animate-pulse">
+                                {{ global_cart_count }}
+                            </span>
+                        {% endif %}
+                    </a>
+                {% endif %}
+
                 {% if user.is_authenticated %}
+                    
+                    <!-- 2. Account Profile Link: Exclude for Admins -->
+                    {% if not user.is_custom_admin %}
+                        <a href="{% url 'account_profile' %}" class="text-xs uppercase tracking-widest font-semibold text-stone-700 hover:text-ornagold-600 transition">
+                            Account
+                        </a>
+                    {% endif %}
+
+                    <!-- 3. Admin / Artisan Studio Pill -->
                     {% if user.is_custom_admin or user.is_vendor %}
                         <a href="{% url 'dashboard' %}" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden rounded-full font-medium text-xs tracking-wider uppercase group shadow-md hover:shadow-ornagold-500/25 transition">
                             <span class="w-full h-full bg-gradient-to-br from-ornagold-400 via-rosegold to-ornagold-600 group-hover:from-ornagold-500 group-hover:to-blushgem-400 absolute"></span>
-                            <span class="relative px-4 py-1.5 transition-all ease-out bg-white rounded-full group-hover:bg-opacity-0 group-hover:text-white text-stone-800 text-[11px] font-semibold">
+                            <span class="relative px-3.5 py-1.5 transition-all ease-out bg-white rounded-full group-hover:bg-opacity-0 group-hover:text-white text-stone-800 text-[10px] font-semibold">
                                 {% if user.is_custom_admin %}Admin Studio{% else %}Artisan Hub{% endif %}
                             </span>
                         </a>
                     {% endif %}
-                    
-                    <span class="hidden sm:inline-block text-xs font-serif italic text-stone-500">
-                        {{ user.username }} <span class="text-rosegold">({{ user.get_role_display }})</span>
-                    </span>
 
+                    <!-- Sign Out Form -->
                     <form action="{% url 'logout' %}" method="post" class="inline">
                         {% csrf_token %}
-                        <button type="submit" class="text-xs text-stone-500 hover:text-blushgem-500 transition-colors uppercase tracking-wider font-semibold">
+                        <button type="submit" class="text-xs text-stone-400 hover:text-blushgem-500 uppercase tracking-wider font-semibold transition-colors">
                             Exit
                         </button>
                     </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="text-xs tracking-widest uppercase font-semibold text-stone-700 hover:text-ornagold-600 transition-colors">
+                    <a href="{% url 'login' %}" class="text-xs tracking-widest uppercase font-semibold text-stone-700 hover:text-ornagold-600 transition">
                         Sign In
                     </a>
-                    <a href="{% url 'register' %}" class="relative inline-flex items-center justify-center px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white rounded-full overflow-hidden shadow-lg shadow-blushgem-300/40 group">
-                        <span class="absolute inset-0 bg-gradient-to-r from-rosegold via-blushgem-500 to-ornagold-500 transition-all duration-500 ease-out group-hover:scale-105"></span>
-                        <span class="relative">Join Maison</span>
+                    <a href="{% url 'register' %}" class="px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white rounded-full bg-gradient-to-r from-rosegold via-blushgem-500 to-ornagold-500 shadow-md hover:scale-105 transition">
+                        Join Maison
                     </a>
                 {% endif %}
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
+    <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full animate-fade-in-up">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
+    <!-- Luxury Footer -->
     <footer class="mt-24 border-t border-ornagold-200/80 bg-white/70 backdrop-blur-md text-stone-600">
         <div class="max-w-7xl mx-auto px-6 py-14 flex flex-col items-center text-center">
             <span class="font-serif text-3xl tracking-[0.3em] font-semibold text-stone-900">ORNASTYLE</span>
@@ -171,7 +191,7 @@
             </p>
             <div class="flex flex-wrap justify-center gap-6 text-xs uppercase tracking-widest text-ornagold-700 font-medium mt-6">
                 <a href="{% url 'home' %}" class="hover:underline">Collection</a>
-                <a href="{% url 'about' %}" class="hover:underline">About Us</a>
+                <a href="{% url 'about' %}" class="hover:underline">About Atelier</a>
                 <span>Ethical Gemstones</span>
                 <span>Bespoke Commission</span>
             </div>

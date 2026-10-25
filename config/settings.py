@@ -47,13 +47,14 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media',
-            ],
-        },
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+            'django.template.context_processors.media',
+            'core.context_processors.cart_count_context',  # Global Cart Count
+        ],
+},
     },
 ]
 
@@ -130,3 +131,8 @@ AUTH_USER_MODEL = 'core.User'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+
+# Razorpay Configuration (Test Keys)
+RAZORPAY_KEY_ID = 'rzp_test_YourTestKeyIdHere'
+RAZORPAY_KEY_SECRET = 'YourTestKeySecretHere'
