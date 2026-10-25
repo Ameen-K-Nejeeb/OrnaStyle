@@ -1,50 +1,186 @@
 {% extends 'base.html' %}
+{% block title %}Curator Studio | OrnaStyle{% endblock %}
+
 {% block content %}
-<div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-8 border-b border-rose-200">
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-8 border-b border-ornagold-200/80 gap-4">
     <div>
-        <h1 class="font-serif text-3xl text-stone-900">Maison Curator Dashboard</h1>
-        <p class="text-xs text-stone-500 mt-1 font-light">Inventory CRUD and asset management for role: <strong class="text-gold-700 uppercase">{{ user.get_role_display }}</strong></p>
+        <div class="flex items-center space-x-2">
+            <span class="text-xs uppercase tracking-widest text-rosegold font-semibold">OrnaStyle Command Hub</span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider {% if is_admin %}bg-stone-900 text-ornagold-300{% else %}bg-ornagold-100 text-ornagold-700{% endif %}">
+                {{ user.get_role_display }}
+            </span>
+        </div>
+        <h1 class="font-serif text-3xl sm:text-4xl text-stone-900 font-normal mt-1">
+            {% if is_admin %}Platform Overview & Master Control{% else %}Artisan Workshop Dashboard{% endif %}
+        </h1>
     </div>
-    <a href="{% url 'item_create' %}" class="mt-4 md:mt-0 inline-flex items-center bg-gradient-to-r from-gold-500 to-amber-600 text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase shadow-sm hover:brightness-105 transition">
-        + Enlist Piece
-    </a>
+    
+    <div class="flex items-center space-x-3">
+        {% if is_admin %}
+            <a href="{% url 'admin_users' %}" class="px-5 py-2.5 rounded-full border border-stone-800 bg-stone-900 text-ornagold-200 hover:bg-stone-800 text-xs uppercase tracking-wider font-semibold shadow-sm transition">
+                Manage Accounts
+            </a>
+        {% endif %}
+        <a href="{% url 'item_create' %}" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-ornagold-500 via-ornagold-600 to-rosegold text-white text-xs uppercase tracking-[0.2em] font-semibold shadow-lg shadow-ornagold-500/20 hover:scale-105 active:scale-95 transition-all">
+            + Enlist Creation
+        </a>
+    </div>
 </div>
 
-<div class="bg-white rounded-2xl border border-rose-100 shadow-sm overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs border-collapse">
-            <thead class="bg-rose-50/40 text-stone-600 uppercase tracking-widest border-b border-rose-100">
-                <tr>
-                    <th class="py-3.5 px-4 font-semibold">Title</th>
-                    <th class="py-3.5 px-4 font-semibold">Material</th>
-                    <th class="py-3.5 px-4 font-semibold">Valuation</th>
-                    <th class="py-3.5 px-4 font-semibold">Stock</th>
-                    {% if user.is_custom_admin %}<th class="py-3.5 px-4 font-semibold">Vendor</th>{% endif %}
-                    <th class="py-3.5 px-4 font-semibold text-right">Operations</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-rose-50">
-                {% for item in items %}
-                <tr class="hover:bg-rose-50/30 transition">
-                    <td class="py-3.5 px-4 font-medium text-stone-800 font-serif text-sm">{{ item.title }}</td>
-                    <td class="py-3.5 px-4 text-stone-500">{{ item.get_material_display }}</td>
-                    <td class="py-3.5 px-4 font-semibold text-gold-700 font-serif">${{ item.price }}</td>
-                    <td class="py-3.5 px-4 text-stone-600">{{ item.stock }} units</td>
-                    {% if user.is_custom_admin %}
-                    <td class="py-3.5 px-4 text-stone-400 italic">{{ item.vendor.username }}</td>
-                    {% endif %}
-                    <td class="py-3.5 px-4 text-right space-x-3">
-                        <a href="{% url 'item_update' item.pk %}" class="text-amber-600 hover:text-amber-700 font-medium">Edit</a>
-                        <a href="{% url 'item_delete' item.pk %}" class="text-rose-500 hover:text-rose-700 font-medium">Delete</a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center py-8 text-stone-400 italic">No artifacts found in this portal.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+{% if messages %}
+<div class="mb-6 space-y-2">
+    {% for message in messages %}
+    <div class="p-3.5 rounded-2xl text-xs font-medium border {% if message.tags == 'info' %}bg-amber-50 text-amber-800 border-amber-200{% elif message.tags == 'warning' %}bg-rose-50 text-rose-800 border-rose-200{% else %}bg-emerald-50 text-emerald-800 border-emerald-200{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Financial & Volume Snapshot Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+    <div class="bg-white p-6 rounded-3xl border border-ornagold-100 shadow-sm">
+        <span class="text-xs uppercase tracking-widest text-stone-400 font-medium block">Active Listed Pieces</span>
+        <span class="font-serif text-3xl font-bold text-stone-900 mt-2 block">{{ items|length }}</span>
+    </div>
+    <div class="bg-white p-6 rounded-3xl border border-ornagold-100 shadow-sm">
+        <span class="text-xs uppercase tracking-widest text-stone-400 font-medium block">Assigned Order Line Items</span>
+        <span class="font-serif text-3xl font-bold text-stone-900 mt-2 block">{{ order_items|length }}</span>
+    </div>
+    <div class="bg-white p-6 rounded-3xl border border-ornagold-100 shadow-sm">
+        <span class="text-xs uppercase tracking-widest text-stone-400 font-medium block">{% if is_admin %}Gross Platform Sales{% else %}Artisan Revenue Generated{% endif %}</span>
+        <span class="font-serif text-3xl font-bold text-ornagold-700 mt-2 block">${{ total_revenue }}</span>
+    </div>
+</div>
+
+<!-- SECTION 1: INVENTORY MANAGEMENT TABLE -->
+<div class="mb-12">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="font-serif text-2xl text-stone-900">{% if is_admin %}Universal Inventory Registry{% else %}My Atelier Collection{% endif %}</h2>
+        <span class="text-xs text-stone-400 uppercase tracking-widest">{{ items|length }} artifacts enrolled</span>
+    </div>
+    <div class="bg-white rounded-3xl border border-ornagold-200/60 shadow-[0_10px_30px_rgba(212,175,55,0.06)] overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+                <thead class="bg-[#FCF8F5] text-stone-600 uppercase tracking-widest border-b border-ornagold-100">
+                    <tr>
+                        <th class="py-4 px-6 font-semibold w-20">Preview</th>
+                        <th class="py-4 px-6 font-semibold">Title & Category</th>
+                        <th class="py-4 px-6 font-semibold">Metal / Gem</th>
+                        <th class="py-4 px-6 font-semibold">Valuation</th>
+                        <th class="py-4 px-6 font-semibold">Stock</th>
+                        <th class="py-4 px-6 font-semibold">Store Status</th>
+                        {% if is_admin %}<th class="py-4 px-6 font-semibold">Artisan</th>{% endif %}
+                        <th class="py-4 px-6 font-semibold text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-rose-50">
+                    {% for item in items %}
+                    <tr class="hover:bg-blushgem-50/30 transition-colors {% if not item.is_active %}opacity-60 bg-stone-50/50{% endif %}">
+                        <td class="py-3 px-6">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="w-12 h-12 rounded-xl object-cover border border-ornagold-300 shadow-sm">
+                            {% else %}
+                                <div class="w-12 h-12 rounded-xl bg-ornagold-50 border border-dashed border-ornagold-300 flex items-center justify-center text-[9px] text-stone-400 font-serif italic text-center p-1">No Pic</div>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 px-6">
+                            <span class="font-serif text-base font-semibold text-stone-900 block">{{ item.title }}</span>
+                            <span class="text-[10px] uppercase tracking-wider text-rosegold font-medium">{{ item.category.name|default:"High Jewelry" }}</span>
+                        </td>
+                        <td class="py-4 px-6 text-stone-600 font-medium">{{ item.get_material_display }}</td>
+                        <td class="py-4 px-6 font-serif text-base font-bold text-ornagold-700">${{ item.price }}</td>
+                        <td class="py-4 px-6 text-stone-600 font-medium">{{ item.stock }} units</td>
+                        <td class="py-4 px-6">
+                            {% if item.is_active %}
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+                                    Live
+                                </span>
+                            {% else %}
+                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-stone-100 text-stone-500 border border-stone-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-stone-400 mr-1.5"></span>
+                                    Deactivated
+                                </span>
+                            {% endif %}
+                        </td>
+                        {% if is_admin %}
+                        <td class="py-4 px-6 text-rosegold font-serif italic">{{ item.vendor.username }}</td>
+                        {% endif %}
+                        <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
+                            <a href="{% url 'item_update' item.pk %}" class="text-stone-700 hover:text-ornagold-600 font-semibold uppercase tracking-wider text-[11px] px-2.5 py-1 bg-stone-100 rounded-md transition">Edit</a>
+                            <a href="{% url 'item_toggle_status' item.pk %}" class="font-semibold uppercase tracking-wider text-[11px] px-2.5 py-1 rounded-md transition {% if item.is_active %}bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200{% else %}bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200{% endif %}">
+                                {% if item.is_active %}Deactivate{% else %}Activate{% endif %}
+                            </a>
+                            <a href="{% url 'item_delete' item.pk %}" class="text-rose-600 hover:text-rose-700 font-semibold uppercase tracking-wider text-[11px] px-2.5 py-1 bg-rose-50 hover:bg-rose-100 rounded-md border border-rose-200 transition">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="py-12 text-center text-stone-400 italic font-serif">No jewelry items found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION 2: ORDERS MANAGEMENT TABLE -->
+<div>
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="font-serif text-2xl text-stone-900">{% if is_admin %}Platform Incoming Orders{% else %}My Orders To Fulfill{% endif %}</h2>
+        <span class="text-xs text-stone-400 uppercase tracking-widest">{{ order_items|length }} client acquisitions</span>
+    </div>
+    <div class="bg-white rounded-3xl border border-ornagold-200/60 shadow-[0_10px_30px_rgba(212,175,55,0.06)] overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+                <thead class="bg-[#FCF8F5] text-stone-600 uppercase tracking-widest border-b border-ornagold-100">
+                    <tr>
+                        <th class="py-4 px-6 font-semibold">Order ID</th>
+                        <th class="py-4 px-6 font-semibold">Acquired Item</th>
+                        <th class="py-4 px-6 font-semibold">Client Name</th>
+                        <th class="py-4 px-6 font-semibold">Purchase Price</th>
+                        <th class="py-4 px-6 font-semibold">Delivery State</th>
+                        {% if is_admin %}<th class="py-4 px-6 font-semibold">Responsible Vendor</th>{% endif %}
+                        <th class="py-4 px-6 font-semibold text-right">Fulfillment Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-rose-50">
+                    {% for order_item in order_items %}
+                    <tr class="hover:bg-blushgem-50/30 transition-colors">
+                        <td class="py-4 px-6 font-mono font-semibold text-stone-800">#{{ order_item.order.id }}</td>
+                        <td class="py-4 px-6 font-serif text-sm font-semibold text-stone-900">
+                            {{ order_item.item.title|default:"Archived Piece" }}
+                        </td>
+                        <td class="py-4 px-6 text-stone-600">{{ order_item.order.full_name }}</td>
+                        <td class="py-4 px-6 font-serif font-bold text-ornagold-700">${{ order_item.price_at_purchase }}</td>
+                        <td class="py-4 px-6">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold 
+                                {% if order_item.status == 'DELIVERED' %}bg-emerald-50 text-emerald-700 border border-emerald-200
+                                {% elif order_item.status == 'CANCELLED' %}bg-rose-50 text-rose-700 border border-rose-200
+                                {% elif order_item.status == 'SHIPPED' %}bg-blue-50 text-blue-700 border border-blue-200
+                                {% else %}bg-amber-50 text-amber-700 border border-amber-200{% endif %}">
+                                {{ order_item.get_status_display }}
+                            </span>
+                        </td>
+                        {% if is_admin %}
+                        <td class="py-4 px-6 text-rosegold font-serif italic">{{ order_item.vendor.username }}</td>
+                        {% endif %}
+                        <td class="py-4 px-6 text-right whitespace-nowrap">
+                            <a href="{% url 'order_status_update' order_item.pk %}" class="inline-block px-3 py-1.5 rounded-full bg-stone-900 text-ornagold-200 hover:bg-stone-800 text-[11px] font-semibold uppercase tracking-wider transition">
+                                Update Status
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="py-12 text-center text-stone-400 italic font-serif">No customer acquisitions registered yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}

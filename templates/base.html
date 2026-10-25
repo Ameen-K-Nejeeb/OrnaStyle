@@ -1,98 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maison Lumière | Haute Joaillerie</title>
+    <title>{% block title %}OrnaStyle | Fine Haute Joaillerie{% endblock %}</title>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS with Custom Palette -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
-                        gold: {
-                            50: '#FAF8F0',
-                            100: '#F5EED8',
-                            300: '#E5C97A',
+                        ornagold: {
+                            50: '#FDFBF7',
+                            100: '#FBF5EC',
+                            200: '#F5E6CC',
+                            300: '#EBD2A3',
+                            400: '#DEBA70',
                             500: '#D4AF37',
-                            600: '#C29B27',
-                            700: '#9E7C1B',
+                            600: '#B89228',
+                            700: '#94721C',
                         },
-                        blush: {
+                        blushgem: {
                             50: '#FFF5F6',
-                            100: '#FEE8EB',
-                            200: '#FCD1D7',
-                            300: '#F7A8B5',
-                            500: '#E06D82',
+                            100: '#FEECEF',
+                            200: '#FCD5DC',
+                            300: '#F9B2BE',
+                            400: '#F38195',
+                            500: '#E65370',
                         },
-                        rosegold: '#B76E79',
+                        rosegold: '#C98288',
+                    },
+                    animation: {
+                        'float-soft': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.3', transform: 'scale(1)' },
+                            '50%': { opacity: '0.7', transform: 'scale(1.05)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
                     }
                 }
             }
         }
     </script>
+    <style>
+        .gold-shimmer-text {
+            background: linear-gradient(120deg, #94721C 0%, #D4AF37 35%, #FFF2B2 50%, #D4AF37 65%, #94721C 100%);
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 6s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+    </style>
 </head>
-<body class="bg-[#FCF9F7] text-stone-800 font-sans min-h-screen flex flex-col selection:bg-rose-100 selection:text-gold-700">
+<body class="bg-[#FAF7F5] text-stone-800 font-sans min-h-screen flex flex-col relative overflow-x-hidden selection:bg-rose-200 selection:text-ornagold-700">
 
-    <!-- Top Champagne Banner -->
-    <div class="bg-gradient-to-r from-[#FCEEEA] via-[#FDF8F0] to-[#FCEEEA] py-1.5 text-center text-[11px] font-medium tracking-widest text-gold-700 border-b border-rose-100/60 uppercase">
-        Complimentary Silk Gift Wrapping & Insured Express Delivery
+    <!-- Atmospheric Radiant Light Blooms -->
+    <div class="fixed top-[-100px] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-blushgem-200/40 to-ornagold-200/30 blur-[120px] pointer-events-none -z-10 animate-float-soft"></div>
+    <div class="fixed bottom-[10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-bl from-ornagold-300/20 to-blushgem-300/30 blur-[140px] pointer-events-none -z-10 animate-pulse-glow"></div>
+
+    <!-- Top Champagne Announcement Bar -->
+    <div class="bg-gradient-to-r from-[#201B18] via-[#352B24] to-[#201B18] text-ornagold-200 py-1.5 px-4 text-center text-[11px] tracking-[0.25em] uppercase border-b border-ornagold-500/30 flex items-center justify-center space-x-2">
+        <span class="inline-block animate-spin" style="animation-duration: 9s;">✦</span>
+        <span class="font-medium">OrnaStyle Signature &bull; Complimentary Insured Delivery & Heirloom Velvet Box</span>
+        <span class="inline-block animate-spin" style="animation-duration: 9s;">✦</span>
     </div>
 
-    <!-- Navigation Header -->
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-rose-100/80 shadow-[0_2px_15px_-3px_rgba(224,109,130,0.05)]">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="{% url 'home' %}" class="flex flex-col items-center">
-                <span class="font-serif text-2xl md:text-3xl tracking-[0.2em] font-semibold text-stone-900">MAISON LUMIÈRE</span>
-                <span class="text-[9px] tracking-[0.35em] text-gold-600 font-medium -mt-1 uppercase">Atelier de Joaillerie</span>
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-nav border-b border-ornagold-200/60 shadow-[0_4px_25px_-5px_rgba(212,175,55,0.06)]">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="{% url 'home' %}" class="group flex flex-col items-center">
+                <span class="font-serif text-3xl md:text-4xl tracking-[0.25em] font-semibold text-stone-900 group-hover:scale-[1.01] transition-transform duration-300">
+                    ORNA<span class="gold-shimmer-text font-bold">STYLE</span>
+                </span>
+                <span class="text-[9px] tracking-[0.45em] text-rosegold uppercase font-semibold -mt-1">Haute Parure</span>
             </a>
 
-            <div class="flex items-center space-x-6 text-sm">
-                <a href="{% url 'home' %}" class="text-stone-600 hover:text-gold-600 transition">Collection</a>
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-xs font-semibold tracking-widest uppercase text-stone-700">
+                <a href="{% url 'home' %}" class="hover:text-ornagold-600 transition-colors {% if request.resolver_match.url_name == 'home' %}text-ornagold-600 border-b border-ornagold-400 pb-1{% endif %}">
+                    The Collection
+                </a>
+                <a href="{% url 'about' %}" class="hover:text-ornagold-600 transition-colors {% if request.resolver_match.url_name == 'about' %}text-ornagold-600 border-b border-ornagold-400 pb-1{% endif %}">
+                    About Atelier
+                </a>
+                <a href="{% url 'home' %}#vault" class="hover:text-ornagold-600 transition-colors">
+                    Vault Highlights
+                </a>
+            </nav>
+
+            <!-- User Auth & Dashboard CTA -->
+            <div class="flex items-center space-x-4">
                 {% if user.is_authenticated %}
                     {% if user.is_custom_admin or user.is_vendor %}
-                        <a href="{% url 'dashboard' %}" class="bg-gradient-to-r from-amber-400 via-gold-500 to-amber-500 text-white px-3.5 py-1.5 rounded-full text-xs font-medium shadow-sm hover:opacity-90 transition">
-                            Curator Portal
+                        <a href="{% url 'dashboard' %}" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden rounded-full font-medium text-xs tracking-wider uppercase group shadow-md hover:shadow-ornagold-500/25 transition">
+                            <span class="w-full h-full bg-gradient-to-br from-ornagold-400 via-rosegold to-ornagold-600 group-hover:from-ornagold-500 group-hover:to-blushgem-400 absolute"></span>
+                            <span class="relative px-4 py-1.5 transition-all ease-out bg-white rounded-full group-hover:bg-opacity-0 group-hover:text-white text-stone-800 text-[11px] font-semibold">
+                                {% if user.is_custom_admin %}Admin Studio{% else %}Artisan Hub{% endif %}
+                            </span>
                         </a>
                     {% endif %}
-                    <span class="text-xs text-rose-900/60 font-serif italic">{{ user.username }} ({{ user.get_role_display }})</span>
+                    
+                    <span class="hidden sm:inline-block text-xs font-serif italic text-stone-500">
+                        {{ user.username }} <span class="text-rosegold">({{ user.get_role_display }})</span>
+                    </span>
+
                     <form action="{% url 'logout' %}" method="post" class="inline">
                         {% csrf_token %}
-                        <button type="submit" class="text-stone-500 hover:text-rose-500 text-xs">Sign Out</button>
+                        <button type="submit" class="text-xs text-stone-500 hover:text-blushgem-500 transition-colors uppercase tracking-wider font-semibold">
+                            Exit
+                        </button>
                     </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="text-stone-600 hover:text-gold-600 transition">Sign In</a>
-                    <a href="{% url 'register' %}" class="bg-gradient-to-r from-rose-400 to-rosegold text-white px-4 py-2 rounded-full text-xs font-semibold shadow-sm hover:opacity-90 transition">
-                        Join Maison
+                    <a href="{% url 'login' %}" class="text-xs tracking-widest uppercase font-semibold text-stone-700 hover:text-ornagold-600 transition-colors">
+                        Sign In
+                    </a>
+                    <a href="{% url 'register' %}" class="relative inline-flex items-center justify-center px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white rounded-full overflow-hidden shadow-lg shadow-blushgem-300/40 group">
+                        <span class="absolute inset-0 bg-gradient-to-r from-rosegold via-blushgem-500 to-ornagold-500 transition-all duration-500 ease-out group-hover:scale-105"></span>
+                        <span class="relative">Join Maison</span>
                     </a>
                 {% endif %}
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Content Stage -->
-    <main class="flex-grow max-w-7xl mx-auto px-6 py-10 w-full">
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full animate-fade-in-up">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footnote -->
-    <footer class="bg-stone-900 text-stone-300 py-10 mt-16 border-t-2 border-gold-500/40">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h3 class="font-serif text-xl tracking-[0.25em] text-gold-300 uppercase">Maison Lumière</h3>
-            <p class="text-xs text-stone-400 mt-2 font-light">Crafted with certified conflict-free diamonds, fair-mined rose gold & ethical pearls.</p>
-            <div class="mt-6 text-[10px] text-stone-500 uppercase tracking-widest">
-                &copy; 2026 Maison Lumière Joaillerie. All Rights Reserved.
+    <!-- Footer -->
+    <footer class="mt-24 border-t border-ornagold-200/80 bg-white/70 backdrop-blur-md text-stone-600">
+        <div class="max-w-7xl mx-auto px-6 py-14 flex flex-col items-center text-center">
+            <span class="font-serif text-3xl tracking-[0.3em] font-semibold text-stone-900">ORNASTYLE</span>
+            <p class="max-w-md text-xs text-stone-500 mt-3 font-light leading-relaxed">
+                Handcrafted for women who carry timeless radiance. Each piece holds a legacy of certified gold, brilliant-cut gemstones, and high-jewelry devotion.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6 text-xs uppercase tracking-widest text-ornagold-700 font-medium mt-6">
+                <a href="{% url 'home' %}" class="hover:underline">Collection</a>
+                <a href="{% url 'about' %}" class="hover:underline">About Us</a>
+                <span>Ethical Gemstones</span>
+                <span>Bespoke Commission</span>
+            </div>
+            <div class="text-[11px] text-stone-400 tracking-widest uppercase mt-8 border-t border-rose-100 pt-6 w-full max-w-sm">
+                &copy; 2026 OrnaStyle Atelier. All Rights Reserved.
             </div>
         </div>
     </footer>
+
 </body>
 </html>

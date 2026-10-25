@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}User & Vendor Governance | OrnaStyle{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between pb-6 mb-8 border-b border-ornagold-200/80">
+    <div>
+        <span class="text-xs uppercase tracking-widest text-rosegold font-semibold">Administrative Access</span>
+        <h1 class="font-serif text-3xl sm:text-4xl text-stone-900 font-normal mt-1">User & Artisan Directory</h1>
+    </div>
+    <a href="{% url 'dashboard' %}" class="text-xs uppercase tracking-widest font-semibold text-stone-600 hover:text-ornagold-700 transition">
+        &larr; Back to Dashboard
+    </a>
+</div>
+
+{% if messages %}
+<div class="mb-6 space-y-2">
+    {% for message in messages %}
+    <div class="p-3.5 rounded-2xl text-xs font-medium border bg-amber-50 text-amber-800 border-amber-200">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="bg-white rounded-3xl border border-ornagold-200/60 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-[#FCF8F5] text-stone-600 uppercase tracking-widest border-b border-ornagold-100">
+                <tr>
+                    <th class="py-4 px-6 font-semibold">Username</th>
+                    <th class="py-4 px-6 font-semibold">Email</th>
+                    <th class="py-4 px-6 font-semibold">Current Role</th>
+                    <th class="py-4 px-6 font-semibold">Account State</th>
+                    <th class="py-4 px-6 font-semibold">Member Since</th>
+                    <th class="py-4 px-6 font-semibold text-right">Privilege Operations</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-rose-50">
+                {% for target_user in users %}
+                <tr class="hover:bg-blushgem-50/30 transition-colors">
+                    <td class="py-4 px-6 font-semibold text-stone-900 font-serif text-sm">
+                        {{ target_user.username }}
+                        {% if target_user == user %}<span class="text-[10px] text-ornagold-600 ml-1">(You)</span>{% endif %}
+                    </td>
+                    <td class="py-4 px-6 text-stone-600">{{ target_user.email|default:"No email provided" }}</td>
+                    <td class="py-4 px-6">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider
+                            {% if target_user.role == 'ADMIN' %}bg-stone-900 text-ornagold-300
+                            {% elif target_user.role == 'VENDOR' %}bg-amber-100 text-amber-800
+                            {% else %}bg-stone-100 text-stone-700{% endif %}">
+                            {{ target_user.get_role_display }}
+                        </span>
+                    </td>
+                    <td class="py-4 px-6">
+                        {% if target_user.is_active %}
+                            <span class="text-emerald-600 font-semibold">Active</span>
+                        {% else %}
+                            <span class="text-rose-500 font-semibold">Suspended</span>
+                        {% endif %}
+                    </td>
+                    <td class="py-4 px-6 text-stone-400">{{ target_user.date_joined|date:"M d, Y" }}</td>
+                    <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
+                        <a href="{% url 'admin_user_edit' target_user.pk %}" class="px-2.5 py-1 bg-stone-100 hover:bg-stone-200 text-stone-800 font-semibold uppercase text-[10px] rounded-md transition">Edit Role</a>
+                        {% if target_user != user %}
+                        <a href="{% url 'admin_user_toggle' target_user.pk %}" class="px-2.5 py-1 {% if target_user.is_active %}bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200{% else %}bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border border-emerald-200{% endif %} font-semibold uppercase text-[10px] rounded-md transition">
+                            {% if target_user.is_active %}Suspend{% else %}Reactivate{% endif %}
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

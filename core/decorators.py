@@ -8,5 +8,15 @@ def staff_or_vendor_required(view_func):
             return redirect('login')
         if request.user.is_custom_admin() or request.user.is_vendor():
             return view_func(request, *args, **kwargs)
-        raise PermissionDenied("Access restricted to Vendors and Admin personnel.")
+        raise PermissionDenied("Access restricted to Vendors and Admins.")
+    return wrapper
+
+
+def admin_only_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('login')
+        if request.user.is_custom_admin():
+            return view_func(request, *args, **kwargs)
+        raise PermissionDenied("Access restricted to Platform Administrators.")
     return wrapper

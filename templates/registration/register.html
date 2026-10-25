@@ -1,16 +1,45 @@
 {% extends 'base.html' %}
+{% block title %}Sign Up | OrnaStyle{% endblock %}
+
 {% block content %}
-<div class="max-w-md mx-auto bg-white p-8 rounded-3xl border border-rose-100 shadow-[0_4px_25px_-5px_rgba(224,109,130,0.06)]">
-    <div class="text-center mb-6">
-        <h2 class="font-serif text-2xl font-normal text-stone-900">Become a Patron / Artisan</h2>
-        <p class="text-xs text-stone-400 mt-1">Select your access level and establish credentials</p>
+<div class="max-w-md mx-auto bg-white p-8 sm:p-10 rounded-3xl border border-ornagold-200/80 shadow-[0_20px_40px_rgba(224,109,130,0.08)]">
+    
+    <!-- Minimalist Clean Header -->
+    <div class="text-center mb-8">
+        <h2 class="font-serif text-3xl font-normal text-stone-900">Create Account</h2>
     </div>
-    <form method="post" class="space-y-4">
+
+    <!-- Form -->
+    <form method="post" class="space-y-4" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="w-full mt-4 bg-gradient-to-r from-gold-500 to-amber-600 text-white py-3 rounded-full text-xs font-semibold tracking-widest uppercase shadow-sm hover:brightness-105 transition">
-            Establish Membership
+
+        {% if form.non_field_errors %}
+            <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-600 space-y-1">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="space-y-1.5">
+                <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-wider font-semibold text-stone-700">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-xs text-rose-500 font-medium mt-1">{{ field.errors.0 }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="w-full mt-6 py-3.5 rounded-full bg-gradient-to-r from-ornagold-500 via-ornagold-600 to-rosegold text-white text-xs uppercase tracking-[0.2em] font-semibold shadow-xl shadow-ornagold-500/20 hover:scale-[1.02] active:scale-95 transition-all">
+            Sign Up
         </button>
     </form>
+    
+    <div class="text-center mt-6 pt-4 border-t border-rose-50 text-xs text-stone-500">
+        Already have an account? <a href="{% url 'login' %}" class="text-ornagold-600 font-semibold hover:underline">Sign In</a>
+    </div>
 </div>
 {% endblock %}

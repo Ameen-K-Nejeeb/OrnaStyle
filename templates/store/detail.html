@@ -1,52 +1,80 @@
 {% extends 'base.html' %}
+{% block title %}{{ item.title }} | OrnaStyle Haute Collection{% endblock %}
+
 {% block content %}
-<div class="max-w-4xl mx-auto bg-white rounded-3xl border border-rose-100 shadow-[0_4px_25px_-5px_rgba(224,109,130,0.08)] p-6 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+<div class="max-w-5xl mx-auto bg-white rounded-3xl border border-ornagold-200/70 shadow-[0_20px_50px_rgba(212,175,55,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
     
     <!-- Image Stage -->
-    <div class="bg-[#FFFDFD] rounded-2xl border border-rose-100 flex items-center justify-center overflow-hidden aspect-square">
-        {% if item.image %}
-            <img src="{{ item.image.url }}" alt="{{ item.title }}" class="object-cover w-full h-full">
-        {% else %}
-            <span class="font-serif text-stone-300 italic">Portrait Unavailable</span>
-        {% endif %}
+    <div class="relative bg-gradient-to-br from-[#FFF8F4] to-[#F7ECE4] flex items-center justify-center p-8 border-b md:border-b-0 md:border-r border-rose-100">
+        <div class="w-full aspect-square rounded-2xl overflow-hidden shadow-inner flex items-center justify-center bg-white/50 backdrop-blur-sm">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="object-cover w-full h-full hover:scale-105 transition-transform duration-700">
+            {% else %}
+                <span class="font-serif italic text-stone-400 text-lg">OrnaStyle Studio Capture Pending</span>
+            {% endif %}
+        </div>
+        <span class="absolute top-6 left-6 text-xs uppercase tracking-widest text-rosegold font-semibold bg-white/80 px-3 py-1 rounded-full">Certified Authenticity</span>
     </div>
 
-    <!-- Specifications -->
-    <div class="flex flex-col justify-between">
+    <!-- Product Details -->
+    <div class="p-8 sm:p-12 flex flex-col justify-between">
         <div>
             <div class="flex items-center space-x-2">
-                <span class="text-xs tracking-widest text-gold-600 font-semibold uppercase">{{ item.get_material_display }}</span>
+                <span class="text-xs font-semibold tracking-[0.25em] text-ornagold-700 uppercase">{{ item.get_material_display }}</span>
                 <span class="text-stone-300">&bull;</span>
-                <span class="text-xs text-rose-400 font-medium">Bespoke Artisan Item</span>
-            </div>
-            <h1 class="font-serif text-3xl md:text-4xl text-stone-900 font-normal mt-1">{{ item.title }}</h1>
-            <p class="font-serif text-2xl text-gold-700 font-semibold mt-3">${{ item.price }}</p>
-
-            <div class="mt-6 space-y-2.5 border-y border-rose-100/70 py-4 text-xs text-stone-600">
-                <div class="flex justify-between">
-                    <span class="text-stone-400">Total Precious Weight:</span>
-                    <span class="font-medium text-stone-800">{{ item.weight_in_grams }} Grams</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-stone-400">Available Vault Stock:</span>
-                    <span class="font-medium text-stone-800">{{ item.stock }} Unit(s)</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-stone-400">Crafting Master:</span>
-                    <span class="font-medium text-stone-800">{{ item.vendor.username }}</span>
-                </div>
+                <span class="text-xs text-rosegold font-medium uppercase tracking-wider">{{ item.category.name|default:"Bespoke" }}</span>
             </div>
 
+            <h1 class="font-serif text-3xl sm:text-4xl text-stone-900 font-normal mt-2 leading-tight">
+                {{ item.title }}
+            </h1>
+
+            <div class="mt-4 flex items-baseline space-x-3">
+                <span class="font-serif text-3xl sm:text-4xl font-bold text-stone-900">${{ item.price }}</span>
+                <span class="text-xs text-emerald-600 font-medium tracking-wide">Insured Express & Taxes Included</span>
+            </div>
+
+            <!-- Specs Grid -->
+            <div class="grid grid-cols-2 gap-4 mt-8 py-5 border-y border-rose-100 text-xs">
+                <div>
+                    <span class="text-stone-400 uppercase tracking-wider block">Net Weight</span>
+                    <span class="font-semibold text-stone-800 text-sm mt-0.5">{{ item.weight_in_grams }} Grams</span>
+                </div>
+                <div>
+                    <span class="text-stone-400 uppercase tracking-wider block">Vault Availability</span>
+                    <span class="font-semibold text-stone-800 text-sm mt-0.5">{{ item.stock }} In Vault</span>
+                </div>
+                <div>
+                    <span class="text-stone-400 uppercase tracking-wider block">Artisan / Vendor</span>
+                    <span class="font-semibold text-stone-800 text-sm mt-0.5">{{ item.vendor.username }}</span>
+                </div>
+                <div>
+                    <span class="text-stone-400 uppercase tracking-wider block">Hallmark</span>
+                    <span class="font-semibold text-stone-800 text-sm mt-0.5">OrnaStyle Certified</span>
+                </div>
+            </div>
+
+            <!-- Description -->
             <div class="mt-6">
-                <h4 class="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">Artisan Notes</h4>
-                <p class="text-stone-600 text-xs md:text-sm leading-relaxed font-light">{{ item.description }}</p>
+                <h3 class="text-xs uppercase tracking-widest text-stone-400 font-semibold mb-2">Jeweler's Narrative</h3>
+                <p class="text-stone-600 text-xs sm:text-sm font-light leading-relaxed">{{ item.description }}</p>
             </div>
         </div>
 
-        <div class="mt-8">
-            <button class="w-full bg-gradient-to-r from-amber-500 via-gold-500 to-amber-600 text-white font-medium text-xs tracking-widest uppercase py-3.5 rounded-full shadow-md hover:brightness-105 transition">
-                Acquire Creation
-            </button>
+        <!-- Buy Action -->
+        <div class="mt-10 space-y-3">
+            {% if user.is_authenticated %}
+                <a href="{% url 'buy_now' item.pk %}" class="block text-center w-full py-4 rounded-full bg-gradient-to-r from-ornagold-500 via-ornagold-600 to-rosegold text-white text-xs uppercase tracking-[0.25em] font-semibold shadow-xl shadow-ornagold-600/25 hover:brightness-110 active:scale-95 transition-all duration-300">
+                    Acquire To Vault Case
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="block text-center w-full py-4 rounded-full bg-stone-900 text-ornagold-200 text-xs uppercase tracking-[0.25em] font-semibold hover:bg-stone-800 transition">
+                    Sign In To Acquire
+                </a>
+            {% endif %}
+            <p class="text-center text-[10px] text-stone-400 uppercase tracking-widest">
+                Hand-wrapped in signature OrnaStyle silk & velvet jewelry box
+            </p>
         </div>
     </div>
 </div>

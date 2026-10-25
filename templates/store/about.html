@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% block title %}The Atelier Legend | OrnaStyle Haute Joaillerie{% endblock %}
+
+{% block content %}
+<style>
+    /* Ultra-luxe Keyframe Choreography */
+    @keyframes spin-aura {
+        0% { transform: rotate(0deg) scale(1); }
+        50% { transform: rotate(180deg) scale(1.1); }
+        100% { transform: rotate(360deg) scale(1); }
+    }
+    @keyframes float-particle {
+        0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+        25% { opacity: 0.8; }
+        75% { opacity: 0.8; }
+        100% { transform: translateY(-120px) rotate(360deg); opacity: 0; }
+    }
+    @keyframes border-runway {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    @keyframes sparkle-pulse {
+        0%, 100% { transform: scale(0.8); opacity: 0.2; }
+        50% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 10px #D4AF37); }
+    }
+
+    .animated-aura {
+        animation: spin-aura 22s linear infinite;
+    }
+    .shimmer-runway-card {
+        background: linear-gradient(120deg, #F5E6CC, #DEBA70, #FCD5DC, #D4AF37, #F5E6CC);
+        background-size: 300% 300%;
+        animation: border-runway 8s ease infinite;
+    }
+    .sparkle-node {
+        animation: sparkle-pulse 3s ease-in-out infinite;
+    }
+    
+    /* 3D Glass Surface Physics */
+    .perspective-stage {
+        perspective: 1200px;
+    }
+    .tilt-surface {
+        transform-style: preserve-3d;
+        transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+</style>
+
+<div class="relative space-y-28 overflow-hidden py-4">
+
+    <!-- FLOATING GOLD EMBER PARTICLES -->
+    <div class="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+        <span class="absolute top-[12%] left-[15%] text-ornagold-400 text-sm font-serif select-none" style="animation: float-particle 7s linear infinite;">✦</span>
+        <span class="absolute top-[28%] right-[20%] text-rosegold text-xs font-serif select-none" style="animation: float-particle 9s 1.5s linear infinite;">✧</span>
+        <span class="absolute top-[50%] left-[8%] text-ornagold-300 text-base font-serif select-none" style="animation: float-particle 8s 3s linear infinite;">✦</span>
+        <span class="absolute top-[72%] right-[10%] text-blushgem-400 text-xs font-serif select-none" style="animation: float-particle 10s 2s linear infinite;">✧</span>
+        <span class="absolute top-[88%] left-[25%] text-ornagold-500 text-xs font-serif select-none" style="animation: float-particle 6s 4s linear infinite;">✦</span>
+    </div>
+
+    <!-- 1. HERO SPOTLIGHT WITH RADIAL HALO -->
+    <section class="relative text-center max-w-4xl mx-auto pt-8">
+        
+        <!-- Rotating Optical Sunburst Halo -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[500px] h-[340px] sm:h-[500px] rounded-full bg-gradient-to-tr from-ornagold-300/30 via-blushgem-200/40 to-ornagold-400/20 blur-[90px] -z-10 animated-aura pointer-events-none"></div>
+
+        <div class="inline-flex items-center space-x-3 text-xs uppercase tracking-[0.4em] text-rosegold font-bold bg-white/90 backdrop-blur-md px-5 py-2 rounded-full border border-ornagold-200/80 shadow-[0_4px_20px_rgba(212,175,55,0.12)]">
+            <span class="sparkle-node text-ornagold-500">✦</span>
+            <span>The OrnaStyle Legacy</span>
+            <span class="sparkle-node text-ornagold-500">✦</span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl text-stone-900 font-normal leading-[1.12] mt-8">
+            Alchemy of Sacred Gold & <span class="gold-shimmer-text font-semibold italic">Eternal Light.</span>
+        </h1>
+
+        <p class="text-stone-600 text-sm sm:text-lg font-light leading-relaxed mt-6 max-w-2xl mx-auto">
+            OrnaStyle was founded not to assemble accessories, but to consecrate moments. Born from generations of fine European and Eastern goldsmithing, each piece is an eternal talisman tailored for the sovereign spirit.
+        </p>
+
+        <!-- Downward Pulse Beacon -->
+        <div class="mt-10 flex justify-center">
+            <div class="w-7 h-12 rounded-full border-2 border-ornagold-400/70 flex items-start justify-center p-1.5 shadow-sm">
+                <div class="w-1.5 h-3 rounded-full bg-gradient-to-b from-ornagold-500 to-rosegold animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. INTERACTIVE 3D TILT ARTIFACT SHOWCASE -->
+    <section class="perspective-stage max-w-6xl mx-auto">
+        <div id="interactiveCard" class="tilt-surface shimmer-runway-card p-[1.5px] rounded-[36px] shadow-[0_30px_70px_rgba(212,175,55,0.18)]">
+            <div class="bg-white/95 backdrop-blur-xl rounded-[35px] p-8 sm:p-14 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left: Holographic Medallion -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-[#FFF7EE] via-[#FDF1EB] to-[#FFF9F5] border border-ornagold-300 flex items-center justify-center shadow-inner group">
+                        
+                        <!-- Concentric Orbit Rings -->
+                        <div class="absolute inset-3 rounded-full border border-dashed border-ornagold-400/50 animate-spin" style="animation-duration: 40s;"></div>
+                        <div class="absolute inset-7 rounded-full border border-rosegold/30 animate-spin" style="animation-duration: 25s; animation-direction: reverse;"></div>
+
+                        <!-- Central Seal -->
+                        <div class="text-center z-10 space-y-1">
+                            <span class="font-serif text-5xl text-ornagold-600 block sparkle-node">❦</span>
+                            <span class="font-serif text-2xl font-bold tracking-[0.25em] text-stone-900 block mt-1">ORNA</span>
+                            <span class="text-[9px] uppercase tracking-[0.4em] text-rosegold font-bold block">18K &bull; Atelier</span>
+                        </div>
+
+                        <!-- 4 Corner Axis Pins -->
+                        <span class="absolute top-2 text-ornagold-500 text-[10px]">▲</span>
+                        <span class="absolute bottom-2 text-ornagold-500 text-[10px]">▼</span>
+                        <span class="absolute left-2 text-ornagold-500 text-[10px]">◀</span>
+                        <span class="absolute right-2 text-ornagold-500 text-[10px]">▶</span>
+                    </div>
+                </div>
+
+                <!-- Right: Prose Narrative with Live Counters -->
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="text-xs uppercase tracking-[0.35em] text-rosegold font-bold block">The Artisan Manifesto</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl text-stone-900 font-normal leading-tight">
+                        Molten Purity Hand-Poured at 1,064°C
+                    </h2>
+                    <p class="text-stone-600 text-xs sm:text-sm font-light leading-relaxed">
+                        Every single contour is cast in small micro-batches. We eliminate mass mechanical stamped manufacturing in favor of hand-drawn gold wire, diamond microscope pavé stone setting, and diamond-paste buffing rituals.
+                    </p>
+                    <p class="text-stone-600 text-xs sm:text-sm font-light leading-relaxed">
+                        When you hold an OrnaStyle creation against your skin, you feel the precise thermodynamic balance: heavy enough to anchor you in luxury, yet sculpted with silk contours that move like water.
+                    </p>
+
+                    <!-- LIVE COUNTER TICKERS -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-rose-100">
+                        <div>
+                            <div class="flex items-baseline font-serif text-3xl sm:text-4xl font-bold text-ornagold-700">
+                                <span class="counter-num" data-target="100">0</span>
+                                <span>%</span>
+                            </div>
+                            <span class="block text-[10px] uppercase tracking-wider text-stone-500 mt-1 font-medium">Fair-Mined Gold</span>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline font-serif text-3xl sm:text-4xl font-bold text-ornagold-700">
+                                <span class="counter-num" data-target="24">0</span>
+                                <span>K</span>
+                            </div>
+                            <span class="block text-[10px] uppercase tracking-wider text-stone-500 mt-1 font-medium">Peak Karat Mastery</span>
+                        </div>
+                        <div>
+                            <div class="flex items-baseline font-serif text-3xl sm:text-4xl font-bold text-ornagold-700">
+                                <span class="counter-num" data-target="1840">0</span>
+                                <span>+</span>
+                            </div>
+                            <span class="block text-[10px] uppercase tracking-wider text-stone-500 mt-1 font-medium">Bespoke Heirlooms</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. THE SACRED PILLARS (EXPANDING GLOW CARDS) -->
+    <section class="max-w-6xl mx-auto">
+        <div class="text-center max-w-xl mx-auto mb-14">
+            <span class="text-xs uppercase tracking-[0.35em] text-rosegold font-bold">Uncompromising Vows</span>
+            <h2 class="font-serif text-3xl sm:text-4xl text-stone-900 font-normal mt-2">The OrnaStyle Trinity</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Pillar Card 1 -->
+            <div class="group relative bg-white rounded-3xl p-8 border border-rose-100 shadow-[0_10px_30px_rgba(224,109,130,0.05)] hover:shadow-[0_20px_50px_rgba(212,175,55,0.2)] hover:-translate-y-3 transition-all duration-500 overflow-hidden">
+                <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-ornagold-200/40 to-transparent rounded-bl-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+                <div class="w-14 h-14 rounded-2xl bg-ornagold-50 border border-ornagold-200 flex items-center justify-center text-ornagold-700 font-serif text-2xl font-bold mb-6 group-hover:rotate-12 transition-transform duration-300">
+                    I
+                </div>
+                <h3 class="font-serif text-2xl text-stone-900 group-hover:text-ornagold-600 transition-colors">Ethical Provenance</h3>
+                <p class="text-xs sm:text-sm text-stone-500 leading-relaxed font-light mt-3">
+                    Every diamond undergoes dual laser microscopic verification. No blood diamonds, no exploitative metallurgy—only harmony between Earth and artisan.
+                </p>
+                <div class="mt-6 text-[10px] uppercase tracking-widest text-rosegold font-semibold flex items-center space-x-1">
+                    <span>Kimberley Process Certified</span>
+                    <span>&rarr;</span>
+                </div>
+            </div>
+
+            <!-- Pillar Card 2 -->
+            <div class="group relative bg-white rounded-3xl p-8 border border-rose-100 shadow-[0_10px_30px_rgba(224,109,130,0.05)] hover:shadow-[0_20px_50px_rgba(212,175,55,0.2)] hover:-translate-y-3 transition-all duration-500 overflow-hidden">
+                <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-blushgem-200/50 to-transparent rounded-bl-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+                <div class="w-14 h-14 rounded-2xl bg-blushgem-50 border border-blushgem-200 flex items-center justify-center text-rosegold font-serif text-2xl font-bold mb-6 group-hover:rotate-12 transition-transform duration-300">
+                    II
+                </div>
+                <h3 class="font-serif text-2xl text-stone-900 group-hover:text-rosegold transition-colors">Anatomical Ergonomics</h3>
+                <p class="text-xs sm:text-sm text-stone-500 leading-relaxed font-light mt-3">
+                    Engineered to rest flush against collars and delicate collarbones. Weight distribution algorithms ensure zero hair snagging and zero skin friction.
+                </p>
+                <div class="mt-6 text-[10px] uppercase tracking-widest text-ornagold-700 font-semibold flex items-center space-x-1">
+                    <span>Silk-Contour Finishing</span>
+                    <span>&rarr;</span>
+                </div>
+            </div>
+
+            <!-- Pillar Card 3 -->
+            <div class="group relative bg-white rounded-3xl p-8 border border-rose-100 shadow-[0_10px_30px_rgba(224,109,130,0.05)] hover:shadow-[0_20px_50px_rgba(212,175,55,0.2)] hover:-translate-y-3 transition-all duration-500 overflow-hidden">
+                <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-ornagold-200/40 to-transparent rounded-bl-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+                <div class="w-14 h-14 rounded-2xl bg-ornagold-50 border border-ornagold-200 flex items-center justify-center text-ornagold-700 font-serif text-2xl font-bold mb-6 group-hover:rotate-12 transition-transform duration-300">
+                    III
+                </div>
+                <h3 class="font-serif text-2xl text-stone-900 group-hover:text-ornagold-600 transition-colors">Century Restoration</h3>
+                <p class="text-xs sm:text-sm text-stone-500 leading-relaxed font-light mt-3">
+                    Your acquisition includes lifetime complimentary ultrasonic micro-bath cleansings, annual prong tightening, and archival repolishing.
+                </p>
+                <div class="mt-6 text-[10px] uppercase tracking-widest text-rosegold font-semibold flex items-center space-x-1">
+                    <span>Perpetual Heirloom Care</span>
+                    <span>&rarr;</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. ANIMATED CALL TO ACTION PORTAL -->
+    <section class="relative rounded-3xl overflow-hidden p-10 sm:p-16 text-center text-white bg-gradient-to-r from-[#1E1916] via-[#2F2620] to-[#1E1916] border border-ornagold-500/40 shadow-2xl">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-ornagold-500/20 via-transparent to-transparent pointer-events-none"></div>
+
+        <span class="text-xs uppercase tracking-[0.4em] text-ornagold-300 font-bold block mb-3">Begin Your Chapter</span>
+        <h2 class="font-serif text-3xl sm:text-5xl font-normal leading-tight max-w-xl mx-auto">
+            Experience Haute Joaillerie in Person
+        </h2>
+        <p class="text-stone-300 text-xs sm:text-sm font-light max-w-lg mx-auto mt-4 leading-relaxed">
+            Enter our public vault to acquire curated pieces, or connect with our authorized artisans for bespoke one-of-one commissions.
+        </p>
+
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <a href="{% url 'home' %}" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-ornagold-500 via-ornagold-600 to-rosegold text-white text-xs uppercase tracking-[0.25em] font-semibold shadow-xl shadow-ornagold-600/30 hover:scale-105 active:scale-95 transition-all">
+                Enter The Vault
+            </a>
+            <a href="{% url 'register' %}" class="px-8 py-3.5 rounded-full border border-ornagold-400 text-ornagold-200 hover:bg-white/10 text-xs uppercase tracking-[0.25em] font-semibold transition-all">
+                Register as Artisan
+            </a>
+        </div>
+    </section>
+
+</div>
+
+<!-- 5. TILT & SCROLL OBSERVER JAVASCRIPT -->
+<script>
+    // 3D Magnetic Card Gyroscope Effect
+    const card = document.getElementById('interactiveCard');
+    if (card) {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -6; // Max 6 deg
+            const rotateY = ((x - centerX) / centerX) * 6;
+
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+    }
+
+    // Scroll-Triggered Animated Number Counter
+    const counters = document.querySelectorAll('.counter-num');
+    let hasCounted = false;
+
+    const runCounters = () => {
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            let current = 0;
+            const increment = target / 45; // Speed
+
+            const updateCount = () => {
+                current += increment;
+                if (current < target) {
+                    counter.innerText = Math.ceil(current);
+                    requestAnimationFrame(updateCount);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasCounted) {
+                runCounters();
+                hasCounted = true;
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const counterSection = document.querySelector('.counter-num');
+    if (counterSection) {
+        observer.observe(counterSection.closest('.grid'));
+    }
+</script>
+{% endblock %}
